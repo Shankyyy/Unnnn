@@ -1,0 +1,705 @@
+# Unnnn
+DBMS
+1.AnimationMoves
+
+public class AnimationMoves : MonoBehaviour
+{
+	Animator Sonic;
+
+	// Use this for initialization
+	void Start ()
+	{
+		Sonic = GetComponent<Animator>();
+	}
+	
+	// Update is called once per frame
+	void Update ()
+	{
+		if (Input.GetKey (KeyCode.RightArrow)) 
+		{
+			Sonic.SetInteger ("pos", 1);
+		}
+
+		if (Input.GetKeyUp (KeyCode.RightArrow)) 
+		{
+			Sonic.SetInteger ("pos", 0);
+		}
+		if (Input.GetKey (KeyCode.LeftArrow)) 
+		{
+			Sonic.SetInteger ("pos", 2);
+		}
+		if (Input.GetKeyUp (KeyCode.LeftArrow)) 
+		{
+			Sonic.SetInteger ("pos", 4);
+		}
+		if (Input.GetKey (KeyCode.Space)) 
+		{
+			Sonic.SetInteger ("pos", 3);
+		}
+		if (Input.GetKeyUp (KeyCode.Space)) 
+		{
+			Sonic.SetInteger ("pos", 0);
+		}
+
+	}
+}
+
+
+2.AUTO FIRE
+
+
+i.Add this Script With Object 
+
+public float r;
+    public GameObject _bullet;
+
+	// Use this for initialization
+	void Start ()
+    {
+		
+	}
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        r = Time.time;
+        if(r%1<=0.02f)
+        {
+            Instantiate(_bullet, transform.position, Quaternion.identity);
+        }
+	}
+
+
+
+
+ii.Add this Script With Bullet Prefab
+
+void Start ()
+    {
+        Destroy(this.gameObject, 1.0f);
+    }
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        transform.Translate(Vector2.left * 10 * Time.deltaTime);
+    }
+
+
+3.AUTO LEFT MOVE
+
+public float _speed;
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        transform.Translate(Vector2.left * _speed * Time.deltaTime);
+        if (this.transform.position.x > 225.37f)
+        {
+            _speed = -_speed;
+           
+        }
+
+        if (this.transform.position.x < 212.0f)
+        {
+            _speed = -_speed;
+           
+        }
+
+    }
+4.AUTO RIGH MOVE
+
+public float _speed;
+
+    // Use this for initialization
+    void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        transform.Translate(Vector2.right * _speed * Time.deltaTime);
+        if (this.transform.position.x < 78.19f)
+        {
+            _speed = -_speed;
+        }
+
+        transform.Translate(Vector2.right * _speed * Time.deltaTime);
+        if (this.transform.position.x > 90.35f)
+        {
+            _speed = -_speed;
+        }
+
+    }
+
+5.AUTO UP MOVE
+
+public float _speed; 
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update ()
+	{
+		transform.Translate (Vector2.up * _speed*Time.deltaTime);
+		if (this.transform.position.y < -3.39f) 
+		{
+			_speed = -_speed;
+		}
+
+		transform.Translate (Vector2.up * _speed *Time.deltaTime);
+		if (this.transform.position.y > -0.1f) 
+		{
+			_speed = -_speed;
+		}
+	}
+
+
+6.Camera Moving With Player
+
+public GameObject _player;
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        transform.position = new Vector3(_player.transform.position.x+7, transform.position.y,transform.position.z);
+
+    }
+
+
+
+7.COUNT DOWN
+
+using UnityEngine.UI;
+
+public class CountDown : MonoBehaviour {
+    float counter = 300.0f;
+    public Text Count;
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+
+    // Update is called once per frame
+    void Update()
+    {
+        counter -= Time.deltaTime;
+        Count.text = "" + string.Format("{0:0}:{1:00}",Mathf.Floor(counter/60),counter%60);
+	}
+}
+
+
+8.DSTROY
+
+void Update ()
+    {
+		
+	}
+    private void OnCollisionEnter2D(Collision2D _object)
+    {
+        if (_object.gameObject.name == "Sonic")
+            Destroy(_object.gameObject);
+    }
+
+
+
+9.Fire Bullet With User Input
+
+i.Add this Script With Object 
+
+public bool canshoot = true;
+	public GameObject _bullet;
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X) && canshoot)
+        {
+            Instantiate(_bullet, transform.position, Quaternion.identity);
+            canshoot = false;
+
+            Invoke("ShootTimmer", 1.5f);
+        }
+    }
+    void ShootTimmer()
+    {
+        canshoot = true;
+    }
+
+
+
+ii.Add this Script With Bullet Prefab
+void Start ()
+    {
+		Destroy (this.gameObject,1.3f);
+		
+	}
+
+    // Update is called once per frame
+    void Update()
+    {
+
+     
+
+        transform.Translate(Vector2.right * 10 * Time.deltaTime);
+    
+
+	}
+
+
+
+iii.public class bulletscript : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+ 		
+	}
+     void OnCollisionEnter2D(Collision2D _obj)
+    {
+        if (_obj.gameObject.tag == "fly")
+            Destroy(_obj.gameObject);
+    }
+}
+
+
+
+
+
+
+
+10.HIGH SCORE
+
+using UnityEngine.UI;
+
+public class HighScore : MonoBehaviour {
+    public Text HighDisplay;
+    public Text ScoreDisplay;
+  
+    int score=0;
+
+	// Use this for initialization
+	void Start ()
+    {
+        HighDisplay.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+
+    }
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        if (Input.GetKey(KeyCode.S))
+        {
+            score = score + 10;
+            ScoreDisplay.text = score.ToString();
+            {
+
+                if (score > PlayerPrefs.GetInt("HighScore", 0))
+                {
+                    PlayerPrefs.SetInt("HighScore", score);
+                    HighDisplay.text = score.ToString();
+                }
+            }
+        }
+		
+	}
+
+
+11.Left Movement With LocalScale
+
+public float _speed;
+	
+    // Use this for initialization
+	void Start ()
+    {
+		
+	}
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        transform.Translate(Vector2.left * _speed * Time.deltaTime);
+        if (this.transform.position.x > 155.0f)
+        {
+            _speed = -_speed;
+            transform.localScale = new Vector2(0.232474f, 0.1698239f);
+        }
+
+        if (this.transform.position.x < 136.0f)
+        {
+            _speed = -_speed;
+            transform.localScale = new Vector2(-0.232474f, 0.1698239f);
+        }
+    }
+
+
+12.LOADING SCENE
+
+Add Scene In Built Setting
+
+using UnityEngine.SceneManagement;
+
+
+public void OnButtonsClick(GameObject _gameObject)
+   
+ {
+if (_gameObject.name == "Restart1")
+        {
+            Debug.Log("aaa");
+            SceneManager.LoadScene("1st 2d Project");
+        }
+  }
+
+
+
+13.MESSAGE WITH TRIGGER
+
+Add this Script With Empty Object
+using UnityEngine.UI;
+
+public class GotFirePower : MonoBehaviour {
+    public GameObject PowerPanel,PlayPanel;
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+   
+   
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Sonic")
+        {
+         
+            PowerPanel.SetActive(true);
+            Invoke("Deactivate", 10.0f);
+        }
+    }
+    void Deactivate()
+    {
+        PowerPanel.SetActive(false);
+       
+        PlayPanel.SetActive(true);
+
+    }
+
+}
+
+
+14.MOVEMENT 
+
+            
+           void Update () 
+		{
+			if (Input.GetKey (KeyCode.RightArrow))
+			{
+				transform.Translate(Vector2.right * 5.0f * Time.deltaTime);
+			}
+         		if (Input.GetKey (KeyCode.LeftArrow))
+			{
+				transform.Translate(Vector2.left * 5.0f * Time.deltaTime);
+			}
+			if (Input.GetKey (KeyCode.Space))
+			{
+				transform.Translate(Vector2.up * 5.0f * Time.deltaTime);
+			}
+			
+            }
+
+
+
+15.NEXT LEVEL LOADING
+
+using UnityEngine.SceneManagement;
+
+public class level2load : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update () {
+
+		
+	}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag=="Sonic")
+        {
+            Invoke("loadlevel2",0.02f);
+        }
+    }
+    void loadlevel2()
+    {
+        SceneManager.LoadScene("Level2");
+    }
+}
+
+
+
+16.RELOAD SCENE
+
+Add Scene In Built Setting
+
+using UnityEngine.SceneManagement;
+
+
+public void OnButtonsClick(GameObject _gameObject)
+   
+ {
+if (_gameObject.name == "Restart1")
+        {
+            Debug.Log("aaa");
+            SceneManager.LoadScene("1st 2d Project");
+        }
+  }
+
+
+
+17.RESPAWN PLAYER
+
+public Vector3 spawnPoint,spawnpoint2;
+
+	// Use this for initialization
+	void Start () {
+        
+	}
+	
+	// Update is called once per frame
+	void Update () {
+        
+	}
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag=="bullet")
+        {
+            transform.position = spawnPoint;
+        }
+        if (collision.gameObject.tag=="bullet2")
+        {
+           transform.position = spawnpoint2;
+        }
+    }
+
+
+
+18.ROTATE OBJECT
+
+void Update ()
+    {
+        transform.localScale+=new Vector3(0.0030f,0.0030f,0.0030f);
+        
+		
+	}
+
+
+
+19.SCORE
+
+using UnityEngine.UI;
+
+public class Score : MonoBehaviour {
+    public Text ScoreDisplay;
+    public int score=0;
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        if(Input.GetKey(KeyCode.S))
+        {
+            score = score + 10;
+            ScoreDisplay.text = score.ToString();
+        }
+		
+	}
+
+
+20.SHOW MESSAGE IN UI
+
+
+public class UI : MonoBehaviour
+{
+
+public GameObject BuyMessage;
+
+public void OnButtonsClick(GameObject _gameObject)
+		
+{
+if (_gameObject.tag == "Store")
+        {
+            BuyMessage.SetActive(true);
+            Invoke("DeactivateLockedLevel", 1.2f);
+        }
+}
+
+    void DeactivateLockedLevel()
+        {
+        levelLockedMessage.SetActive(false);
+        BuyMessage.SetActive(false);
+
+        }
+}
+
+
+21.TIMMER
+
+using UnityEngine.UI;
+
+public class Timer : MonoBehaviour
+{
+    public Text timerDisplay;
+    float  timer=0.0f;
+    string minutes;
+    string seconds;
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        timer += Time.deltaTime;
+        minutes = Mathf.Floor(timer / 60).ToString("00");
+        seconds = Mathf.Floor(timer% 60).ToString("00");
+        timerDisplay.text = " " + minutes + ":" + seconds;
+		
+	}
+}
+
+
+22.TRIGGER MOVEMENT
+
+
+void Update ()
+    {
+		
+	}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name == "Sonic")
+        {
+            transform.Translate(Vector2.up * 20.0f*Time.deltaTime);
+        }
+    }
+
+
+
+23.Abhishek
+
+
+Start Timings Of Game :   using UnityEngine;
+using UnityEngine.UI;
+
+public class Timer : MonoBehaviour
+{
+    public Text timerDisplay;
+    float  timer=0.0f;
+    string minutes;
+    string seconds;
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        timer += Time.deltaTime;
+        minutes = Mathf.Floor(timer / 60).ToString("00");
+        seconds = Mathf.Floor(timer% 60).ToString("00");
+        timerDisplay.text = " " + minutes + ":" + seconds;
+		
+	}
+}
+
+   Timer CountDown : using UnityEngine;
+using UnityEngine.UI;
+
+public class CountDown : MonoBehaviour {
+    float counter = 300.0f;
+    public Text Count;
+
+	// Use this for initialization
+	void Start () {
+		
+	}
+
+    // Update is called once per frame
+    void Update()
+    {
+        counter -= Time.deltaTime;
+        Count.text = "" + string.Format("{0:0}:{1:00}",Mathf.Floor(counter/60),counter%60);
+	}
+}
+
+   HighScore And Score : using UnityEngine;
+using UnityEngine.UI;
+
+public class HighScore : MonoBehaviour {
+    public Text HighDisplay;
+    public Text ScoreDisplay;
+  
+    int score=0;
+
+	// Use this for initialization
+	void Start ()
+    {
+        HighDisplay.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+
+    }
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        if (Input.GetKey(KeyCode.S))
+        {
+            score = score + 10;
+            ScoreDisplay.text = score.ToString();
+            {
+
+                if (score > PlayerPrefs.GetInt("HighScore", 0))
+                {
+                    PlayerPrefs.SetInt("HighScore", score);
+                    HighDisplay.text = score.ToString();
+                }
+            }
+        }
+		
+	}
